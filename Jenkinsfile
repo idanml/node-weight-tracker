@@ -32,7 +32,7 @@ PGPORT=5432" > .env
 		stage('create tar.gz') {
 			steps {
 				sh 'touch artifact.tar.gz'
-				sh 'tar --exclude=artifact.tar.gz -zcvf artifact.tar.gz /home/idanml/jenkins/workspace/testPipe'
+				sh 'tar --exclude=artifact.tar.gz -zcvf artifact.tar.gz /home/idanml/jenkins/workspace/CI'
 			}
 		}
     }
