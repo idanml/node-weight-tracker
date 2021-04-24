@@ -6,7 +6,7 @@ pipeline {
 				script {
 					withCredentials([string(credentialsId: 'ok_cli_id', variable: 'clientid'), string(credentialsId: 'ok_cli_id', variable: 'client_secret')]) {
 						sh '''
-							echo $clientid
+							echo $clientid > test1.txt
 							'''
 					}
 				}
