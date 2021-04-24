@@ -65,6 +65,11 @@ PGPORT=5432" > .env
 				sh 'touch artifact.tar.gz'
 				sh 'tar --exclude=artifact.tar.gz -zcvf artifact.tar.gz /home/idanml/jenkins/workspace/testPipe'
 			}
+			post {
+                always {
+                    archiveArtifacts artifacts: 'artifact.tar.gz', onlyIfSuccessful: true
+                }
+            }
 		}
 		stage('create tar.gz 2') {
 			agent {label 'VM2slave'}
@@ -72,8 +77,11 @@ PGPORT=5432" > .env
 				sh 'touch artifact.tar.gz'
 				sh 'tar --exclude=artifact.tar.gz -zcvf artifact.tar.gz /home/idanml/jenkins/workspace/testPipe'
 			}
+			post {
+                always {
+                    archiveArtifacts artifacts: 'artifact.tar.gz', onlyIfSuccessful: true
+                }
+            }
 		}
-    }
-
-			
+    }			
 }
