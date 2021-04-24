@@ -29,5 +29,16 @@ PGPORT=5432" > .env
 				}
 			}
         }
+		stage('create tar.gz') {
+			steps {
+				sh 'tar cvzf app.tar.gz /home/idanml/jenkins/workspace/testPipe'
+			}
+		}
     }
+	post {
+		always {
+			archiveArtifacts artifacts: 'app.tar.gz', onlyIfSuccessful: true
+		}
+	}
+			
 }
