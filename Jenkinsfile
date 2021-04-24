@@ -2,7 +2,7 @@ pipeline {
     agent none
     stages {
         stage('Create .env') {
-			agent {label 'VM1slave}
+			agent {label 'VM1slave'}
 			steps {
 				script {
 					withCredentials([string(credentialsId: 'ok_cli_id', variable: 'clientid'), string(credentialsId: 'ok_sec', variable: 'client_secret')]) {
