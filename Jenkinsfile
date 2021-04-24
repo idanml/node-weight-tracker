@@ -5,7 +5,8 @@ pipeline {
             steps {
 				sh 'pwd'
                 sh '''
-				echo "Hello World2" > test.txt
+				echo "Hello World2
+				hellowww" > test.txt
 				'''
             }
         }
