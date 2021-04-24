@@ -3,8 +3,10 @@ pipeline {
     stages {
         stage('Create .env') {
             steps {
-                sh "echo 'Hello World'
-				echo 'Hello World2'"
+                sh '''
+				echo "Hello World"
+				echo "Hello World2"
+				'''
             }
         }
     }
