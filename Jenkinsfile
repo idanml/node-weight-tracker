@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'VM1slave' && 'VM2slave'}
+    agent {label 'VM1slave' || 'VM2slave'}
     stages {
         stage('Create .env') {
 			steps {
