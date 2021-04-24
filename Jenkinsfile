@@ -15,7 +15,7 @@ COOKIE_ENCRYPT_PWD=superAwesomePasswordStringThatIsAtLeast32CharactersLong!
 
 # Okta configuration
 OKTA_ORG_URL=https://dev-39605781.okta.com
-OKTA_CLIENT_ID=$ok_cli_id
+OKTA_CLIENT_ID=$clientid
 OKTA_CLIENT_SECRET=$client_secret
 
 # Postgres configuration
