@@ -41,4 +41,5 @@ PGPORT=5432" > .env
 			archiveArtifacts artifacts: 'artifact.tar.gz', onlyIfSuccessful: true
 		}
 	}	
+	
 }
