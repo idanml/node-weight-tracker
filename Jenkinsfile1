@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent {agent 'VM1slave'}
     stages {
         stage('Create .env') {
 			steps {
