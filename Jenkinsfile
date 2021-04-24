@@ -4,8 +4,8 @@ pipeline {
         stage('Create .env') {
             steps {
                 sh '''
-				echo "Hello World"
-				echo "Hello World2"
+				echo "Hello World
+				Hello World2" > test.txt
 				'''
             }
         }
