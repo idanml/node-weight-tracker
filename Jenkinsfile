@@ -1,9 +1,10 @@
 pipeline {
     agent {label 'VM1slave'}
     stages {
-        stage('Hello') {
+        stage('Create .env') {
             steps {
-                echo 'Hello World'
+                sh "echo 'Hello World'
+				echo 'Hello World2'"
             }
         }
     }
