@@ -3,9 +3,9 @@ pipeline {
     stages {
         stage('Create .env') {
             steps {
+				sh 'pwd'
                 sh '''
-				echo "Hello World
-				Hello World2" > test.txt
+				echo "Hello World2" > test.txt
 				'''
             }
         }
