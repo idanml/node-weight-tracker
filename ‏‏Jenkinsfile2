@@ -10,7 +10,7 @@ pipeline {
 PORT=8080
 HOST=0.0.0.0
 NODE_ENV=development
-HOST_URL=Http://52.250.114.219:8080
+HOST_URL=Http://52.175.226.171:8080
 COOKIE_ENCRYPT_PWD=superAwesomePasswordStringThatIsAtLeast32CharactersLong!
 
 # Okta configuration
@@ -38,7 +38,7 @@ PGPORT=5432" > .env
     }
 	post {
 		always {
-			azureUpload blobProperties: [], containerName: 'jenkins', filesPath: 'artifact.tar.gz', storageCredentialId: '98457fbb-c52f-462e-97a4-817b73215762', storageType: 'blobstorage'
+			archiveArtifacts artifacts: 'artifact.tar.gz', onlyIfSuccessful: true
 		}
 	}	
 }
