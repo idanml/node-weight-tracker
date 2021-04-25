@@ -41,7 +41,7 @@ PGPORT=5432" > .env
 			azureUpload containerName: 'jenkins', filesPath: 'artifact.tar.gz', storageCredentialId: '98457fbb-c52f-462e-97a4-817b73215762', storageType: 'blobstorage'
 		}
 		failure {
-            sh 'echo "CI pipline has been failed"'
+            sh 'echo "CI pipline has been failed "'
         }
 	}	
 }
