@@ -1,0 +1,8 @@
+- name: maintain app servers
+  hosts: APPVMs
+ 
+ tasks:
+ - name: node
+   apt-get:
+    name: nodejs
+    state: latest
