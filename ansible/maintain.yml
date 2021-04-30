@@ -5,6 +5,6 @@
   tasks: 
     - 
       name: nodejs
-      yum: 
+      apt-get: 
         name: nodejs
         state: latest
