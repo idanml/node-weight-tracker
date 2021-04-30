@@ -3,7 +3,7 @@ pipeline {
     stages {
 		stage('ansible maintain') {
 			steps {
-                sh 'ansible-playbook ./ansible/maintain.yml -i APPVMs'
+                sh 'ansible-playbook ./ansible/maintain.yml'
 			}
         }
 		stage('create tar.gz') {
