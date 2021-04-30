@@ -9,11 +9,11 @@
 
     - name: Download artifact
       azure_rm_storageblob:
-      resource_group: Week6-Project
-      storage_account_name: idanmlstorage
-      container: jenkins
-      blob: artifact.tar.gz
-      dest: ~/app/artifact.tar.gz
-      client_id: "{{client}}"
-      tenant: "{{ten}}"
-      secret: "{{secret}}"
+       resource_group: Week6-Project
+       storage_account_name: idanmlstorage
+       container: jenkins
+       blob: artifact.tar.gz
+       dest: ~/app/artifact.tar.gz
+       client_id: "{{client}}"
+       tenant: "{{ten}}"
+       secret: "{{secret}}"
