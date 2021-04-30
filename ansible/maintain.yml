@@ -1,10 +1,17 @@
---- 
-- 
-  hosts: APPVMs
-  name: "maintain app VMs"
-  tasks: 
-    - 
-      name: nodejs
-      apt-get: 
+---
+- hosts: APPVMs
+  become: yes
+  tasks:
+
+    - name: Update and upgrade apt packages
+      apt:
+        upgrade: yes
+        update_cache: yes
+
+    - name: update nodejs package
+      ansible.builtin.shell: curl -fsSL https://deb.nodesource.com/setup_15.x | sudo -E bash -
+
+    - name: install nodejs
+      apt:
         name: nodejs
-        state: latest
+        state: present
