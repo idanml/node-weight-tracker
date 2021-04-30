@@ -1,0 +1,12 @@
+pipeline {
+    agent {label 'SlaveVm1'}
+    stages {
+		stage('Staging Deployment') {
+			steps {
+				withCredentials([string(credentialsId: 'c618b288-1c51-4660-ad97-26205b45d48e', variable: 'clientid'), string(credentialsId: 'e2745021-c9fe-41fe-ad1b-5929f68fddff', variable: 'tenantid'), string(credentialsId: '0b6eaea0-ae55-4392-89c9-44e0ac82e510', variable: 'secret')]) {
+					sh 'ansible-playbook ./ansible/deployStage.yml -e "client_id=$clientid tenant_id=$tenantid sec=$secret"'
+				}
+			}
+        }		
+    }
+}
