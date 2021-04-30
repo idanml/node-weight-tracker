@@ -6,10 +6,15 @@ pipeline {
                 sh 'ansible-playbook ./ansible/maintain.yml'
 			}
         }
+		stage('npm install') {
+			steps {
+                sh 'npm install'
+			}
+        }		
 		stage('create tar.gz') {
 			steps {
 				sh 'touch artifact.tar.gz'
-				sh 'tar --exclude=artifact.tar.gz -zcvf artifact.tar.gz -C /home/idanml/jenkins/workspace/CI .'
+				sh 'tar --exclude=artifact.tar.gz --exclude=ansible -zcvf artifact.tar.gz -C /home/idanml/jenkins/workspace/CI .'
 			}
 		}
     }
