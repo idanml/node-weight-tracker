@@ -1,6 +1,11 @@
 pipeline {
     agent {label 'SlaveVm1'}
     stages {
+		stage('ansible maintain') {
+			steps {
+                sh 'ansible-playbook ./ansible/maintain.yml -i APPVMs'
+			}
+        }
 		stage('create tar.gz') {
 			steps {
 				sh 'touch artifact.tar.gz'
