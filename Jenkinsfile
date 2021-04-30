@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'VM1slave'}
+    agent {label 'SlaveVm1'}
     stages {
 		stage('create tar.gz') {
 			steps {
