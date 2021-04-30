@@ -1,7 +1,10 @@
-hosts: APPVMs
-name: "maintain app VMs"
-tasks: 
-  - 
-    apt-get: 
+--- 
+- 
+  hosts: APPVMs
+  name: "maintain app VMs"
+  tasks: 
+    - 
       name: nodejs
-      state: latest
+      yum: 
+        name: nodejs
+        state: latest
