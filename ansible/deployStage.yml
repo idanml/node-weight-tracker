@@ -8,7 +8,7 @@
   tasks:
 
     - name: Download artifact
-      azure_rm_storageblob:
+      azure.azcollection.azure_rm_storageblob:
        resource_group: Week6-Project
        storage_account_name: idanmlstorage
        container: jenkins
