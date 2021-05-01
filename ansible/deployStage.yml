@@ -2,7 +2,7 @@
 - hosts: APPVMs
   vars:
     client: "{{client_id}}"
-    ten: "{{tenane_id}}"
+    ten: "{{tenant_id}}"
     secret: "{{sec}}"
   become: yes
   tasks:
