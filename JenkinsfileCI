@@ -20,7 +20,7 @@ pipeline {
     }
 	post {
 		success {
-			azureUpload containerName: 'jenkins', filesPath: 'artifact.tar.gz', storageCredentialId: '48dc6adf-c252-41c2-974e-848e5affbb4b', storageType: 'blobstorage'
+			azureUpload containerName: 'jenkins', filesPath: 'artifact.tar.gz', storageCredentialId: '4dd867c1-7a71-4665-a7f9-a56faa562d6a', storageType: 'blobstorage'
 		}
 		failure {
             sh 'echo "CI pipline has been failed "'
