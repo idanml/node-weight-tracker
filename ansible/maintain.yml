@@ -1,5 +1,5 @@
 ---
-- hosts: APPVMs
+- hosts: appVMs
   become: yes
   tasks:
 
