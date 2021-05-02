@@ -4,6 +4,7 @@
     client: "{{client_id}}"
     ten: "{{tenant_id}}"
     secret: "{{sec}}"
+    subs_id: "{{sub_id}}"
   become: yes
   tasks:
 
@@ -17,3 +18,4 @@
        client_id: "{{client}}"
        tenant: "{{ten}}"
        secret: "{{secret}}"
+       subscription_id: "{{subs_id}}"

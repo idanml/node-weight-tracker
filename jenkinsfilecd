@@ -3,7 +3,7 @@ pipeline {
     stages {
 		stage('Staging Deployment') {
 			steps {
-				withCredentials([string(credentialsId: 'c618b288-1c51-4660-ad97-26205b45d48e', variable: 'clientid'), string(credentialsId: 'e2745021-c9fe-41fe-ad1b-5929f68fddff', variable: 'tenantid'), string(credentialsId: '0b6eaea0-ae55-4392-89c9-44e0ac82e510', variable: 'secret')]) {
+				withCredentials([string(credentialsId: 'c618b288-1c51-4660-ad97-26205b45d48e', variable: 'clientid'), string(credentialsId: 'e2745021-c9fe-41fe-ad1b-5929f68fddff', variable: 'tenantid'), string(credentialsId: '0b6eaea0-ae55-4392-89c9-44e0ac82e510', variable: 'secret'), string(credentialsId: 'ce2c2ed7-9d8d-43f9-b3bf-1fe3516033b5', variable: 'sub_id')]) {
 					sh 'ansible-playbook ./ansible/deployStage.yml -e "client_id=$clientid tenant_id=$tenantid sec=$secret"'
 				}
 			}
