@@ -1,13 +1,13 @@
 ---
-- hosts: APPVMs
+- hosts: appVMs
   vars:
     client: "{{client_id}}"
     ten: "{{tenant_id}}"
     secret: "{{sec}}"
     sub_id: "{{subs_id}}"
   become: yes
+  
   tasks:
-
     - name: Download artifact
       azure.azcollection.azure_rm_storageblob:
        resource_group: Week6-Project
