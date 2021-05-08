@@ -6,7 +6,7 @@ pipeline {
     stages {
 		stage('build image') {
 			steps {
-                sh 'sudo docker build -t $USER_CREDENTIALS_USR/weight-tracker:latest .'
+                sh 'sudo docker build -t $USER_CREDENTIALS_USR/weight-tracker:$BUILD_NUMBER .'
 			}
         }		
     }
