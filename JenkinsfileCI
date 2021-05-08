@@ -1,26 +1,19 @@
 pipeline {
     agent {label 'SlaveVm1'}
+	environment {
+        USER_CREDENTIALS = credentials('user_pass')
+    }
     stages {
-		stage('ansible maintain') {
+		stage('build image') {
 			steps {
-                sh 'ansible-playbook ./ansible/maintain.yml'
-			}
-        }
-		stage('npm install') {
-			steps {
-                sh 'npm install'
+                sh 'sudo docker build -t WTA:latest .'
 			}
         }		
-		stage('create tar.gz') {
-			steps {
-				sh 'touch artifact.tar.gz'
-				sh 'tar --exclude=artifact.tar.gz --exclude=ansible -zcvf artifact.tar.gz -C /home/idanml/jenkins/workspace/CI .'
-			}
-		}
     }
 	post {
 		success {
-			azureUpload containerName: 'jenkins', filesPath: 'artifact.tar.gz', storageCredentialId: '4dd867c1-7a71-4665-a7f9-a56faa562d6a', storageType: 'blobstorage'
+			sh 'docker login -u $USER_CREDENTIALS_USR --password $USER_CREDENTIALS_PSW'
+			sh 'docker push $USER_CREDENTIALS_USR/weight-tracker:latest'
 		}
 		failure {
             sh 'echo "CI pipline has been failed "'
