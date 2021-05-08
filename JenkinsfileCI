@@ -6,14 +6,14 @@ pipeline {
     stages {
 		stage('build image') {
 			steps {
-                sh 'docker build -t weight-tracker:latest .'
+                sh 'sudo docker build -t weight-tracker:latest .'
 			}
         }		
     }
 	post {
 		success {
-			sh 'docker login -u $USER_CREDENTIALS_USR --password $USER_CREDENTIALS_PSW'
-			sh 'docker push $USER_CREDENTIALS_USR/weight-tracker:latest'
+			sh 'sudo docker login -u $USER_CREDENTIALS_USR --password $USER_CREDENTIALS_PSW'
+			sh 'sudo docker push $USER_CREDENTIALS_USR/weight-tracker:latest'
 		}
 		failure {
             sh 'echo "CI pipline has been failed "'
