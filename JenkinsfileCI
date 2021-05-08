@@ -6,7 +6,7 @@ pipeline {
     stages {
 		stage('build image') {
 			steps {
-                sh 'sudo docker build -t WTA:latest .'
+                sh 'docker build -t weight-tracker:latest .'
 			}
         }		
     }
