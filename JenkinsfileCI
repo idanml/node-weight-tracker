@@ -13,7 +13,7 @@ pipeline {
 	post {
 		success {
 			sh 'sudo docker login -u $USER_CREDENTIALS_USR --password $USER_CREDENTIALS_PSW'
-			sh 'sudo docker push $USER_CREDENTIALS_USR/weight-tracker:latest'
+			sh 'sudo docker push $USER_CREDENTIALS_USR/weight-tracker:$BUILD_NUMBER'
 		}
 		failure {
             sh 'echo "CI pipline has been failed "'
