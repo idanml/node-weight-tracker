@@ -1,12 +1,125 @@
 pipeline {
-    agent {label 'SlaveVm1'}
-    stages {
-		stage('Staging Deployment') {
-			steps {
-				withCredentials([string(credentialsId: 'c618b288-1c51-4660-ad97-26205b45d48e', variable: 'clientid'), string(credentialsId: 'e2745021-c9fe-41fe-ad1b-5929f68fddff', variable: 'tenantid'), string(credentialsId: '0b6eaea0-ae55-4392-89c9-44e0ac82e510', variable: 'secret'), string(credentialsId: 'ce2c2ed7-9d8d-43f9-b3bf-1fe3516033b5', variable: 'sub_id')]) {
-					sh 'ansible-playbook ./ansible/deployStage.yml -e "client_id=$clientid tenant_id=$tenantid sec=$secret subs_id=$sub_id"'
-				}
-			}
-        }		
+    agent none
+	environment {
+        USER_CREDENTIALS = credentials('user_pass')
+		oktaCliSTG = credentials('oktaClientSTG')
+		oktaSecSTG = credentials('oktaSecretSTG')
+		psqlPSW = credentials('postgresPass')
+		STGip = '20.98.68.45'
+		oktaCliProd = credentials('oktaClientProd')
+		oktaSecProd = credentials('oktaSecretProd')
+		Prodip = '20.98.68.48'
+		CIbuildNumber = "${Jenkins.instance.getItem('CI').lastSuccessfulBuild.number}"
     }
+    stages {
+		stage('Build Stage env file') {
+			steps {
+				createStageEnv('SlaveVm1', 'SlaveVm2')
+			}
+        }
+		stage('Run app on Stage') {
+			steps {
+				runApp('SlaveVm1', 'SlaveVm2')
+			}
+		}
+		stage('Waiting for approval') {
+			steps {
+				input 'Deploy to Prod?'
+			}
+		}
+		stage('Build Prod env file') {
+			steps {
+				createProdEnv('ProdVm1', 'ProdVm2')
+			}
+        }
+		stage('Run app on Prod') {
+			steps {
+				runApp('ProdVm1', 'ProdVm2')
+			}
+		}
+    }
+}
+
+def createStageEnv(Vm1,Vm2) {
+  def labels = [Vm1,Vm2] // labels for Jenkins node types we will build on
+  def builders = [: ]
+  for (x in labels) {
+    def label = x
+
+    builders[label] = {
+      node(label) {
+sh '''
+			echo "# Host configuration
+PORT=8080
+HOST=0.0.0.0
+NODE_ENV=development
+HOST_URL=Http://$STGip:8080
+COOKIE_ENCRYPT_PWD=superAwesomePasswordStringThatIsAtLeast32CharactersLong!
+
+# Okta configuration
+OKTA_ORG_URL=https://dev-39605781.okta.com
+OKTA_CLIENT_ID=$oktaCliSTG
+OKTA_CLIENT_SECRET=$oktaSecSTG
+
+# Postgres configuration
+PGHOST=10.0.3.5
+PGUSERNAME=postgres
+PGDATABASE=postgres
+PGPASSWORD=$psqlPSW
+PGPORT=5432" > .env
+'''
+      }
+    }
+  }
+  parallel builders
+}
+
+def createProdEnv(Vm1,Vm2) {
+  def labels = [Vm1,Vm2] // labels for Jenkins node types we will build on
+  def builders = [: ]
+  for (x in labels) {
+    def label = x
+
+    builders[label] = {
+      node(label) {
+sh '''
+			echo "# Host configuration
+PORT=8080
+HOST=0.0.0.0
+NODE_ENV=development
+HOST_URL=Http://$Prodip:8080
+COOKIE_ENCRYPT_PWD=superAwesomePasswordStringThatIsAtLeast32CharactersLong!
+
+# Okta configuration
+OKTA_ORG_URL=https://dev-39605781.okta.com
+OKTA_CLIENT_ID=$oktaCliProd
+OKTA_CLIENT_SECRET=$oktaSecProd
+
+# Postgres configuration
+PGHOST=10.0.5.5
+PGUSERNAME=postgres
+PGDATABASE=postgres
+PGPASSWORD=$psqlPSW
+PGPORT=5432" > .env
+'''
+      }
+    }
+  }
+  parallel builders
+}
+
+def runApp(Vm1,Vm2) {
+  def labels = [Vm1,Vm2] // labels for Jenkins node types we will build on
+  def builders = [: ]
+  for (x in labels) {
+    def label = x
+
+    builders[label] = {
+      node(label) {
+			sh 'sudo docker rm -f $(sudo docker ps -a -q) || true'
+			sh 'sudo docker run -d -p 8080:8080 --env-file .env idanml/weight-tracker:$CIbuildNumber'
+      }
+    }
+  }
+  parallel builders
 }
